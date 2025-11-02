@@ -7,8 +7,11 @@ if (process.platform == 'win32' && process.arch == 'x64') {
     //native = require('./bin/winx86/irisnative.node');
     console.log('--Native API--OS not supported!--');
 } else if (process.platform == 'darwin') {
-    native = require('./bin/macx64/irisnative.node'); //included
-    //what about M1?
+    if (process.arch == 'x64') {
+        native = require('./bin/macx64/irisnative.node'); //included
+    } else {
+        native = require('./bin/macos/irisnative.node'); //included for M arch
+    }
 } else if (process.platform == 'linux') {
     let distro = getLinuxDistro();
     //console.log('platform = ' + process.platform + ': ' + distro + ': ' + process.arch);
@@ -583,3 +586,4 @@ module.exports = native;
  * @memberof external:"intersystems-iris-native".IRISList
  * @instance
  */
+
